@@ -7,6 +7,7 @@ import Finished from '../columns/Finished';
 import '../columns/columns.css';
 import Calendar from 'react-calendar';
 import PieCharts from '../charts/PieChart';
+import './content.css';
 
 export default function Content() {
   return (
