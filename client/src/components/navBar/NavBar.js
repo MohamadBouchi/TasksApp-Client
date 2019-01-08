@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { NavLink } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -97,7 +98,7 @@ class NavBar extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>logout</MenuItem>
+        <MenuItem ><NavLink to='login'>logout</NavLink></MenuItem>
       </Menu>
     );
 
@@ -145,7 +146,7 @@ class NavBar extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Home
+              DWH-Tasks
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
