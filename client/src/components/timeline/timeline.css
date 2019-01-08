@@ -1,0 +1,28 @@
+.entry .body {
+    font-size: smaller !important;
+    margin-bottom: 10px !important;
+}
+
+.entry .body p {
+    margin: 7px 0px !important;
+}
+
+.entry .timeline-item-dateinner {
+    font-size: x-small;
+}
+
+.timeline--wrapper {
+    height: 100%;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+    width: auto !important;
+}
+
+.timeline--animate {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.body-container {
+    box-shadow: none !important;
+}
