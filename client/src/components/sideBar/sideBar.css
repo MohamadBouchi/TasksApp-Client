@@ -1,0 +1,9 @@
+.sideBar-container {
+    margin-bottom: 115px !important;
+    background: #ECEFF1;
+}
+
+#sideBar {
+    overflow: scroll;
+    height: 100%;
+}

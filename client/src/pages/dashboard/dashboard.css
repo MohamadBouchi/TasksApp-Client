@@ -1,0 +1,10 @@
+#main {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.container {
+    margin-bottom: 115px !important;
+    background: #EEEEEE;
+}
