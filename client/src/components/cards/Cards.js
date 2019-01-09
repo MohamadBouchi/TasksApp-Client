@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './cards.css';
 
 class Cards extends Component {
     onDragStart = (e) => {

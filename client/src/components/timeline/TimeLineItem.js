@@ -4,6 +4,7 @@ import './timeline.css';
 
 const bodyContainerStyle = {
             background: 'white',
+            margin: '0 10px 0 15px',
             padding: '10px',
             borderRadius: '8px',
             boxShadow: '0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2)'}
