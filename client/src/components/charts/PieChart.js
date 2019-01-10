@@ -24,9 +24,9 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PieCharts extends Component {
 render () {
     return (
-      <ResponsiveContainer width='99%' aspect={4.0/3.0} height='210px'>
+      <ResponsiveContainer width='100%' aspect={4.0/3.0} height='210px'>
       <PieChart>
-    <Pie dataKey="value" data={data01} cx={80} cy={130} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
+    <Pie dataKey="value" data={data01} cx={80} cy={100} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
     {
       data01.map((entry, index) => (
         <Cell key={`cell-${index}`} fill={COLORS01[index]}/>
@@ -36,7 +36,7 @@ render () {
       <Pie dataKey="value"
         data={data} 
         cx={80} 
-        cy={130} 
+        cy={100} 
         innerRadius={60}
         outerRadius={80} 
         fill="#8884d8"

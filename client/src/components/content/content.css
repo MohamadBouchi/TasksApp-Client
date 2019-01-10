@@ -6,3 +6,6 @@
 #section .row {
     height: 810px;
 }
+.react-calendar {
+    width: 100%;
+}
