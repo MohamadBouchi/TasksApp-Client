@@ -7,12 +7,25 @@ const data01 = [{name: 'Inprocess', value: 1},{name: 'Open', value: 5},{name: 'w
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const COLORS01 = ['#8dd1e1', '#83a6ed', '#82ca9d', '#d0ed57'];
 
+const RADIAN = Math.PI / 180;    
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+ const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+ const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+
+ return (
+   <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+     {`${(percent * 100).toFixed(0)}%`}
+   </text>
+ );
+};
+
 
 export default class PieCharts extends Component {
 render () {
     return (
-      <PieChart width={500} height={210} >
-    <Pie dataKey="value" data={data01} cx={110} cy={110} outerRadius={60} fill="#8884d8">
+      <PieChart width={255} height={210} >
+    <Pie dataKey="value" data={data01} cx={55} cy={110} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
     {
       data01.map((entry, index) => (
         <Cell key={`cell-${index}`} fill={COLORS01[index]}/>
@@ -21,13 +34,14 @@ render () {
   </Pie>
       <Pie dataKey="value"
         data={data} 
-        cx={110} 
+        cx={55} 
         cy={110} 
         innerRadius={60}
         outerRadius={80} 
         fill="#8884d8"
-        paddingAngle={5} 
+        paddingAngle={2} 
         label
+        labelLine={true}
       >
           {
             data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]}/>)

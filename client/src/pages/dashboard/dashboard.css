@@ -6,5 +6,6 @@
 
 .container {
     margin-bottom: 115px !important;
-    background: #EEEEEE;
+    background: white;
+    /* background: #EEEEEE; */
 }
