@@ -4,6 +4,7 @@
 }
 
 #sideBar {
-    overflow: scroll;
-    height: 100%;
+    /* overflow: scroll;
+    height: 100%; */
+    margin-bottom: 34px !important;
 }

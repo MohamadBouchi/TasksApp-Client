@@ -3,7 +3,7 @@ import { TimelineItem }  from 'vertical-timeline-component-for-react';
 import './timeline.css';
 
 const bodyContainerStyle = {
-            background: 'white',
+            background: 'bisque',
             margin: '0 10px 0 15px',
             padding: '10px',
             borderRadius: '8px',

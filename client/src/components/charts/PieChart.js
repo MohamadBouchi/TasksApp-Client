@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, Tooltip, Legend} from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import React, { Component } from 'react';
 
 const data = [{name: 'Timo', value: 20}, {name: 'Arndt', value: 20},
@@ -24,8 +24,9 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PieCharts extends Component {
 render () {
     return (
-      <PieChart width={255} height={210} >
-    <Pie dataKey="value" data={data01} cx={55} cy={110} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
+      <ResponsiveContainer width='99%' aspect={4.0/3.0} height='210px'>
+      <PieChart>
+    <Pie dataKey="value" data={data01} cx={80} cy={130} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
     {
       data01.map((entry, index) => (
         <Cell key={`cell-${index}`} fill={COLORS01[index]}/>
@@ -34,8 +35,8 @@ render () {
   </Pie>
       <Pie dataKey="value"
         data={data} 
-        cx={55} 
-        cy={110} 
+        cx={80} 
+        cy={130} 
         innerRadius={60}
         outerRadius={80} 
         fill="#8884d8"
@@ -51,6 +52,7 @@ render () {
      <Tooltip />
      <Legend align='left' layout='vertical'/>
     </PieChart>
+    </ResponsiveContainer>
   );
 }
 };

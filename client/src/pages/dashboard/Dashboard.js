@@ -1,25 +1,23 @@
-import React from 'react';
-import SideBar from '../../components/sideBar/SideBar';
+import React, {Component} from 'react';
 import Content from '../../components/content/Content';
-// import Footer from '../components/footer/Footer';
-import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import './dashboard.css';
+import SideDrawer from '../../components/SideDrawer';
+export default class Dashboard extends Component {
+  constructor(props){
+    super(props);
+  }
 
-export default function Dashboard() {
-  return (
-    <main id='main'>
-      <Grid container spacing={0}>
-        <Hidden mdDown>
-            <Grid item lg={2} className='sideBar-container'>
-              <SideBar/>
-            </Grid>
-        </Hidden>
-        <Grid item lg={10} sm={12} xs={12} className='container'>
-            <Content/>
+  render() {
+    return (
+      <main id='main'>
+        <Grid container spacing={0}>
+          {/* <SideDrawer></SideDrawer> */}
+          <Grid item lg={12} sm={12} xs={12} className='container'>
+              <Content/>
+          </Grid>
         </Grid>
-      </Grid>
-      {/* <Footer /> */}
-    </main>
-  )
+      </main>
+    )
+  }
 }
