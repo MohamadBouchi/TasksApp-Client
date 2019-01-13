@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { Component } from 'react';
-import pieCharts from './pieCharts.css';
+import './pieCharts.css';
 const data = [{ name: 'Timo', value: 20 }, { name: 'Arndt', value: 20 },
 { name: 'Ralf', value: 30 }, { name: 'Mohamed', value: 10 }];
 const data01 = [{ name: 'Inprocess', value: 1 }, { name: 'Open', value: 5 }, { name: 'waiting', value: 7 }, { name: 'finished', value: 10 }]
