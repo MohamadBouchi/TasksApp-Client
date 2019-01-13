@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Cards from '../cards/Cards';
 
 export default class Waiting extends Component {
   render() {
+    const {waiting} = this.props;
     return (
       <div>
-        <div className="col s12 m2 orange lighten-4 center-align">
           <h5>Waiting</h5>
           <hr/>
           <br/>
-        </div>
-        
+          {waiting && waiting.map(task => (
+            <Cards task={task} key={task._id}/>
+          ))}
       </div>
     )
   }

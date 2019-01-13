@@ -5,24 +5,6 @@ import './dashboard.css';
 export default class Dashboard extends Component {
 
   render() {
-    const request = {
-      query: `
-        query{
-          login(email:"user4@test.com",password:"123") {token}
-          }
-      `
-    };
-    fetch('http://localhost:3000/graphql', {
-      method: 'POST',
-      body: JSON.stringify(request),
-      headers:{
-        'Content-Type':'application/json'
-      }
-    }).then(data => {
-      return data.json();
-    }).then(res => {
-      console.log(res);
-    });
     return (
       <main id='main'>
         <Grid container spacing={0}>

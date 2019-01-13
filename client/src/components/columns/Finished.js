@@ -1,14 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Cards from '../cards/Cards';
 
 export default class Finished extends Component {
   render() {
+    const {finished} = this.props;
     return (
       <div>
-        <div className="col s12 m2 green accent-1 center-align">
           <h5>Finished</h5>
           <hr/>
           <br/>
-        </div>
+          {finished && finished.map(task => (
+            <Cards task={task} key={task._id}/>
+          ))}
       </div>
     )
   }

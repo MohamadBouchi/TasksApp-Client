@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Dashboard from './pages/dashboard/Dashboard';
 import Login from './pages/login/Login';
-import SideDrawer from './components/SideDrawer';
+import SideDrawer from './components/sideDrawer/SideDrawer';
 import Footer from './components/footer/Footer';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 

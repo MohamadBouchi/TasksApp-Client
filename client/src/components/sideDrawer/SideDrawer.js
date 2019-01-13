@@ -1,7 +1,7 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import SideBar from './sideBar/SideBar';
-import NavBar from './navBar/NavBar'
+import SideBar from '../sideBar/SideBar';
+import NavBar from '../navBar/NavBar'
 class TemporaryDrawer extends React.Component {
   state = {
     left: false
