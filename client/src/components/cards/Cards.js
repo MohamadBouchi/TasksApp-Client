@@ -10,7 +10,7 @@ class Cards extends Component {
     render() {
         const {title} = this.props.task.taskId;
         const {description} = this.props.task.taskId;
-        const {deadline} = this.props.task.taskId;
+        const  deadline = new Date(Number(this.props.task.taskId.deadline));
         return (
             <div className='card z-depth-0 task-summary' draggable onDragStart={(e) => {this.onDragStart(e)}}>
                 <div className='card-content grey-text text-darken-3'>
@@ -24,7 +24,7 @@ class Cards extends Component {
                     <p className='left-align'>{description}</p>
                     <br></br>
                     <div className="card-action">
-                    <p className='grey-text'>{deadline}</p>
+                    <p className='grey-text'>{deadline.getFullYear()+'-'+deadline.getMonth()+1+'-'+deadline.getDate()}</p>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ export default class Tasks extends Component {
           <hr/>
           <br/>
           { tasks && tasks.map(task =>{
+            const deadline = new Date(task.deadline);
             return (
               <div className='card z-depth-0 task-summary' key={task._id} draggable onDragStart={(e) => {this.onDragStart(e, task._id)}}>
                 <div className='card-content grey-text text-darken-3'>
@@ -29,7 +30,7 @@ export default class Tasks extends Component {
                     <p className='left-align'>{task.description}</p>
                     <br></br>
                     <div className="card-action">
-                    <p className='grey-text'>{task.deadline}</p>
+                    <p className='grey-text'>{deadline.getFullYear()+'-'+deadline.getMonth()+1+'-'+deadline.getDate()}</p>
                     </div>
                 </div>
             </div>
