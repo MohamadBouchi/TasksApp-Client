@@ -6,7 +6,7 @@ export default class Finished extends Component {
     const {finished} = this.props;
     return (
       <div>
-          <h5>Finished</h5>
+          <h5>Finished ({finished.length})</h5>
           <hr/>
           <br/>
           {finished && finished.map(task => (

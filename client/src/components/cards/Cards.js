@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './cards.css';
 
-
 class Cards extends Component {
     onDragStart = (e) => {
         let data = {id: this.props.task._id, status: this.props.task.status};
@@ -17,7 +16,7 @@ class Cards extends Component {
                 <div className='card-content grey-text text-darken-3'>
                     <span className='card-title'>
                     <div className="left">{title}</div>
-                        <img className="btn btn-floating right" alt='MO' src={require('../../me.png')}/>
+                        <img className="btn btn-floating right" alt='MO' src={require('../../'+ this.props.task.userId.userName +'.png')}/>
                     </span>
                     <br></br>
                     <hr></hr>

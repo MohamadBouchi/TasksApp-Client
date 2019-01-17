@@ -24,7 +24,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PieCharts extends Component {
   render() {
     return (
-      <ResponsiveContainer width='99%' aspect={4.0/3.0} height='300px'>
+      <ResponsiveContainer width='99%' aspect={4.0/3.0} height='280px'>
         <PieChart>
           <Pie dataKey="value" data={data01} cx={80} cy={100} outerRadius={60} fill="#8884d8" label={renderCustomizedLabel} >
             {
@@ -50,7 +50,7 @@ export default class PieCharts extends Component {
 
           </Pie>
           <Tooltip />
-          <Legend align='center' layout='horizontal' />
+          <Legend align='left' layout='vertical' />
         </PieChart>
       </ResponsiveContainer>
     );

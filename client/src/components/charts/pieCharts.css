@@ -2,3 +2,7 @@
 .recharts-surface{
     height: 100% !important;
 }
+
+.recharts-legend-wrapper {
+    bottom: 70px !important;
+}

@@ -5,17 +5,21 @@ import Login from './pages/login/Login';
 import SideDrawer from './components/sideDrawer/SideDrawer';
 import Footer from './components/footer/Footer';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <React.Fragment>
-          <SideDrawer></SideDrawer>
+        {this.props.token &&<SideDrawer></SideDrawer>}
           <Switch>
-            <Redirect from='/' to='/login' exact></Redirect>
-            <Route path='/login' component={Login}></Route>
-            <Route path='/Dashboard' component={Dashboard}></Route>
+            {!this.props.token && <Redirect from='/' to='/login' exact></Redirect>}
+            {!this.props.token && <Redirect from='/dashboard' to='/login' exact></Redirect>}
+            {this.props.token && <Redirect from='/' to='/Dashboard' exact></Redirect>}
+            {this.props.token && <Redirect from='/login' to='/Dashboard' exact></Redirect>}
+            {!this.props.token && <Route path='/login' component={Login}></Route>}
+            {this.props.token && <Route path='/Dashboard' component={Dashboard}></Route>}
           </Switch>
           <Footer />
         </React.Fragment>
@@ -24,4 +28,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) =>{
+  return {
+    userId: state.auth.userId,
+    token: state.auth.token,
+    userName: state.auth.userName
+  }
+}
+
+export default connect(mapStateToProps)(App);

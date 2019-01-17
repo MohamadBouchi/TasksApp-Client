@@ -5,7 +5,7 @@
     -webkit-overflow-scrolling: touch;
 }
 #section .row {
-    height: 810px;
+    height: 100%;
 }
 .react-calendar {
     width: 100%;

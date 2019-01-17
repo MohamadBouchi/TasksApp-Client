@@ -9,12 +9,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import TocIcon from '@material-ui/icons/Toc';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
 import './navBar.css';
+import { connect } from 'react-redux';
+import { resetNotification } from '../../store/actions/TaskActions';
 
 const styles = theme => ({
   root: {
@@ -84,12 +84,15 @@ class NavBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleOpenDrawer = () => {
+    this.props.openDrawer();
+    this.props.resetNotification();
+  }
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -113,22 +116,6 @@ class NavBar extends React.Component {
       >
         <MenuItem>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
@@ -149,25 +136,17 @@ class NavBar extends React.Component {
           <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.props.openDrawer}
-            >
-              <TocIcon/>
+              onClick={this.handleOpenDrawer}>
+              <Badge badgeContent={this.props.notification.tasks.notification === 0?'':this.props.notification.tasks.notification}
+                      color={this.props.notification.tasks.notification === 0?'default':'secondary'}>
+                <TocIcon/>
+              </Badge>
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
               Users Activity
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
@@ -195,4 +174,14 @@ NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NavBar);
+const mapStateToProps = (state) =>{
+  return {
+    notification: state
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    resetNotification: () => dispatch(resetNotification())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar));

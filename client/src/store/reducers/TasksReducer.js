@@ -3,11 +3,24 @@ const initState = {
     open: [],
     inProcess: [],
     waiting: [],
-    finished: []
+    finished: [],
+    loading: true,
+    notification: 0
 };
+
 
 const taskReducer = (state = initState, action) => {
     switch (action.type) {
+        case 'SET_NOTIFICATION':
+            return {
+                ...state,
+                notification: state.notification+1 
+            };
+            case 'RESET_NOTIFICATION':
+            return {
+                ...state,
+                notification: 0 
+            };
         case 'RECEIVE_TASKS':
             const tasks = action.payload.data.tasks;
             const userTasks = action.payload.data.userTasks;
@@ -28,11 +41,13 @@ const taskReducer = (state = initState, action) => {
                 else return null;
             });
             return {
-                ...state, tasks: tasks
+                ...state
+                ,tasks: tasks
                 ,open: open
                 ,inProcess: inProcess
                 ,waiting: waiting
-                ,finished: finished
+                ,finished: finished,
+                loading: false
             };
         case 'TASK_CREATED':
             const created_task = action.payload.data.createTask;

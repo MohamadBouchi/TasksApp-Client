@@ -13,8 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import './login.css';
+import { login } from '../../store/actions/AuthActions';
+import { connect } from 'react-redux';
 
-const styles = theme => ({
+const styles = (theme, props) => ({
   main: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
@@ -46,27 +48,43 @@ const styles = theme => ({
   },
 });
 
-function Login(props) {
-  const { classes } = props;
+class Login extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.classes = this.props.classes;
+    this.state = {
+      email:'',
+      password: ''
+    }
+  }
+  
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value});
+  }
+  submitHandler = (e) => {
+    e.preventDefault();
+    this.props.login(this.state.email, this.state.password);
+  }
+  render = () => {
   return (
-    <main className={classes.main}>
+    <main className={this.classes.main}>
       <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <Paper className={this.classes.paper}>
+        <Avatar className={this.classes.avatar}>
           <LockIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={this.classes.form} onSubmit={this.submitHandler}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input onChange={this.handleChange} id="email" name="email" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input onChange={this.handleChange} name="password" type="password" id="password" autoComplete="current-password" />
           </FormControl>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -77,18 +95,24 @@ function Login(props) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={this.classes.submit}
           >
             Sign in
           </Button>
         </form>
       </Paper>
     </main>
-  );
+  );}
 }
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Login));

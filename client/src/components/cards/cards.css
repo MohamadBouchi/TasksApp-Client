@@ -2,3 +2,21 @@
 .task-summary .card-content {
     box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
+
+.card-action,
+.card-content {
+    padding: 10px !important;
+}
+.card-title {
+    margin-bottom: 0px !important;
+}
+.card-content hr{
+    margin-top: 20px !important;
+}
+
+.card-title div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 239px;
+}

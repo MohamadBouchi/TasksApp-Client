@@ -6,7 +6,7 @@ export default class Waiting extends Component {
     const {waiting} = this.props;
     return (
       <div>
-          <h5>Waiting</h5>
+          <h5>Waiting ({waiting.length})</h5>
           <hr/>
           <br/>
           {waiting && waiting.map(task => (

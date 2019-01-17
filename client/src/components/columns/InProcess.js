@@ -6,7 +6,7 @@ export default class InProcess extends Component {
     const {inProcess} = this.props;
     return (
       <div>
-        <h5>In Process</h5>
+        <h5>In Process ({inProcess.length})</h5>
         <hr/>
         <br/>
         {inProcess && inProcess.map(task => (

@@ -1,15 +1,21 @@
-// import io from 'socket.io-client';
+export const setNotification = () => {
+  return (dispatch) => {
+    dispatch({ type: "SET_NOTIFICATION" });
+  }
+}
 
-// const socket = io("http://192.168.0.234:3000");
-
-
+export const resetNotification = () => {
+  return (dispatch) => {
+    dispatch({ type: "RESET_NOTIFICATION" });
+  }
+}
 export const getTasks = () => {
   return (dispatch) => {
     dispatch({ type: "GET_TASK_START" });
     const request = {
           query: `
             query{
-              tasks{
+              tasks(assigned:false){
                   _id,
                   title,
                   description,
@@ -37,7 +43,7 @@ export const getTasks = () => {
               }
           `
         };
-    fetch("http://192.168.0.234:3000/graphql", {
+    fetch("http://10.10.11.70:3000/graphql", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
@@ -46,13 +52,80 @@ export const getTasks = () => {
     }).then(data => {
         return data.json();
       }).then(res => {
-       return dispatch({ type: "RECEIVE_TASKS", payload: res });
+       dispatch({ type: "RECEIVE_TASKS", payload: res });
       })
       .catch(err => {
         dispatch({type:'RECEIVE_TASKS_ERROR', payload: err});
     });
   };
 };
+
+export const updateUserTask = (id, status, date, userId) => {
+  return (dispatch) => {
+    const request = {
+      query: `
+        mutation{
+          updateUserTask(updateUserTask:{
+            id:"${id}",
+            status:"${status}",
+            changeDate:"${date}",
+            userId:"${userId}"
+          })
+        }
+          `
+        };
+    fetch("http://10.10.11.70:3000/graphql", {
+      method: "POST",
+      body: JSON.stringify(request),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(data => {
+        return data.json();
+      }).then(() => {
+        dispatch(getTasks());
+      })
+      .catch(err => {
+      dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
+    });
+  };
+};
+
+export const createUserTask = (taskId, userId, status, date) => {
+  return (dispatch) => {
+    const request = {
+      query: `
+      mutation{
+        createUserTask(userTaskInput:{
+          taskId:"${taskId}",
+          userId:"${userId}",
+          status:"${status}",
+          changeDate:"${date}"
+        })
+        {
+          status
+        }
+        updateTask(assigned:true, id:"${taskId}")
+      }
+          `
+        };
+    fetch("http://10.10.11.70:3000/graphql", {
+      method: "POST",
+      body: JSON.stringify(request),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(data => {
+        return data.json();
+      }).then(() => {
+        dispatch(getTasks());
+      })
+      .catch(err => {
+        dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
+    });
+  };
+};
+
 
 export const createTask = () => {
   return (dispatch) => {
@@ -70,7 +143,7 @@ export const createTask = () => {
           }
           `
         };
-    fetch("http://localhost:3000/graphql", {
+    fetch("http://10.10.11.70:3000/graphql", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
@@ -83,40 +156,6 @@ export const createTask = () => {
       })
     .catch(err => {
       dispatch({type:'RECEIVE_TASKS_ERROR', payload: err});
-    });
-  };
-};
-
-
-export const updateUserTask = (id,status,date) => {
-  return (dispatch) => {
-    const request = {
-      query: `
-        mutation{
-          updateUserTask(updateUserTask:{
-            id:"${id}",
-            status:"${status}",
-            changeDate:"${date}"
-          })
-        }
-          `
-        };
-    fetch("http://192.168.0.234:3000/graphql", {
-      method: "POST",
-      body: JSON.stringify(request),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(data => {
-        return data.json();
-      }).then(() => {
-        dispatch(getTasks());
-        //socket.emit('updated', null);
-        // dispatch({ type: "RECEIVE_TASKS", payload: res });
-      })
-      .catch(err => {
-        alert(err)
-      dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
     });
   };
 };
