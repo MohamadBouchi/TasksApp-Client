@@ -15,8 +15,5 @@
 }
 
 .card-title div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 239px;
+    width: 150px;
 }

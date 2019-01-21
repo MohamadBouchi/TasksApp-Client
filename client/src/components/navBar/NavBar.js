@@ -15,6 +15,7 @@ import { NavLink } from 'react-router-dom';
 import './navBar.css';
 import { connect } from 'react-redux';
 import { resetNotification } from '../../store/actions/TaskActions';
+import { logout } from '../../store/actions/AuthActions';
 
 const styles = theme => ({
   root: {
@@ -88,6 +89,9 @@ class NavBar extends React.Component {
     this.props.openDrawer();
     this.props.resetNotification();
   }
+  handleLogout = () => {
+    this.props.logout();
+  }
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -102,7 +106,7 @@ class NavBar extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem id='logout'><NavLink to='login'>logout</NavLink></MenuItem>
+        <MenuItem id='logout'><NavLink onClick={this.handleLogout} to=''>logout</NavLink></MenuItem>
       </Menu>
     );
 
@@ -181,7 +185,8 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    resetNotification: () => dispatch(resetNotification())
+    resetNotification: () => dispatch(resetNotification()),
+    logout: () => dispatch(logout())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar));

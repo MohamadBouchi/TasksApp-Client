@@ -1,9 +1,3 @@
-.col {
-    height: 100%;
-    padding: 0 5px !important;
-    overflow-y: scroll;
-}
-
 .react-calendar__navigation {
     margin-bottom: 0px !important;
 }

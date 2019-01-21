@@ -10,6 +10,7 @@ import PieCharts from '../charts/PieChart';
 import './content.css';
 import { connect } from 'react-redux';
 import { createTask, updateUserTask, getTasks, createUserTask, setNotification } from '../../store/actions/TaskActions';
+import { createActivity } from '../../store/actions/ActivityActions';
 import io from 'socket.io-client';
 
 const socket = io.connect("http://10.10.11.70:3000");
@@ -27,18 +28,51 @@ class Content extends Component {
     else {
       this.props.updateUserTask(stringData.id, newStatus, new Date().toISOString(), this.props.userId);
     }
-    socket.emit('updated', null);
-    socket.on('updated', (data) => {
-      this.props.getTasks();
-    });
+    this.props.createActivity('201901', newStatus, new Date().toISOString(), this.props.auth.userName, stringData.taskTitle);
     this.props.setNotification();
+    if(!this.props.loading)
+    setTimeout(()=>{
+      socket.emit('updated', {ok: "OK"}); 
+    },500)
+    }
+    componentDidMount(){
+      setInterval(()=>{
+        this.props.getTasks();
+      },200000);
+    socket.on('updated', (data) => {
+      if(data.ok === 'OK')
+        this.props.getTasks();
+    });
   }
+ 
   render(){
+    if(!this.props.loading){
       const {tasks}  = this.props;
       const {open}  = this.props;
       const {inProcess}  = this.props;
       const {waiting}  = this.props;
       const {finished}  = this.props;
+      const tasksData= {
+        'tasks': tasks.length,
+        'open': open.length,
+        'inProcess': inProcess.length,
+        'waiting': waiting.length,
+        'finished': finished.length};
+      const mohamed = this.props.userTasks.filter(myTask => {
+        if (myTask.userId.userName === 'mbouchi')        
+          return myTask;
+        else return null;
+      });
+      const arndt = this.props.userTasks.filter(myTask => {
+        if (myTask.userId.userName === 'aschneider')        
+          return myTask;
+        else return null;
+      });
+      const timo = this.props.userTasks.filter(myTask => {
+        if (myTask.userId.userName === 'therwix')        
+          return myTask;
+        else return null;
+      });
       return (
         <section id='section'>
           <div className="row">
@@ -63,16 +97,20 @@ class Content extends Component {
                   onDrop={(e) =>this.onDrop(e, 'finished')}>
                 <Finished finished={finished}></Finished>
             </div>
-            <div>
-            <div className="col s12 m2">
-              <Calendar minDetail="year" view='year' maxDetail='year' minDate={new Date()} value={new Date()} maxDate={new Date()}/>
-              <PieCharts></PieCharts>
-              <PieCharts></PieCharts>
-            </div>
+            <div className="col s12 m2 calendar-chart-col">
+              <Calendar showNavigation={true} minDetail="year" view='year' maxDetail='year' minDate={new Date()} value={new Date()} maxDate={new Date()}/>
+              <PieCharts tasksData={tasksData}
+                         usersData={{'mohamed': mohamed, 'arndt': arndt, 'timo': timo}} 
+              ></PieCharts>
             </div>
           </div>
         </section>
-      )
+      );
+    } else {
+      return (
+      <h6>loading</h6>
+      );
+    }
   }
 }
 
@@ -85,15 +123,18 @@ const mapStateToProps = (state) =>{
     finished: state.tasks.finished,
     loading: state.tasks.loading,
     userId: state.auth.userId,
+    userTasks: state.tasks.userTasks,
+    auth: state.auth
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     createTask: () => dispatch(createTask()),
+    setNotification: () => dispatch(setNotification()),
     getTasks: () => dispatch(getTasks()),
     createUserTask: (taskId, userId, status, date) => dispatch(createUserTask(taskId, userId, status, date)),
     updateUserTask: (id, status, date, userId) => dispatch(updateUserTask(id, status, date, userId)),
-    setNotification: () => dispatch(setNotification())
+    createActivity: (date, status, changeDate, userName, taskTitle) => dispatch(createActivity(date, status, changeDate, userName, taskTitle))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Content);

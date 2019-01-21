@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { TimelineItem }  from 'vertical-timeline-component-for-react';
 import './timeline.css';
+import { connect } from 'react-redux';
+import { getActivity } from '../../store/actions/ActivityActions';
 
 const bodyContainerStyle = {
             background: 'bisque',
@@ -9,140 +11,97 @@ const bodyContainerStyle = {
             borderRadius: '8px',
             boxShadow: '0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2)'}
 
-export default class TimeLineItem extends Component {
+class TimeLineItem extends Component {
+  
+  componentDidMount(){
+    this.props.getActivity('201901')
+  }
   render() {
+    if(this.props.activities.activities.length !== 0)
     return (
       <div>
-        <TimelineItem
-          key="001"
-          dateText="01.01.19 12:30"
-          style={{ color: '#61b8ff' }}
-          dateInnerStyle={{ background: '#61b8ff', color: '#000' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Mohamed</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task5</h6>
-          <p>
-            Change Status to <i style={{color: 'green'}}>finished</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="002"
-          dateText="01.01.19 12:30"
-          style={{ color: '#76bb7f' }}
-          dateInnerStyle={{ background: '#76bb7f' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Mohamed</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task1</h6>
-          <p>
-            Change Status to <i style={{color: 'green'}}>finished</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="003"
-          dateText="01.01.19 12:00"
-          style={{ color: '#e86971' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Kasper</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task2</h6>
-          <p>
-            Change Status to <i style={{color: 'orange'}}>witting</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="004"
-          dateText="01.01.19 11:30"
-          style={{ color: '#61b8ff' }}
-          dateInnerStyle={{ background: '#61b8ff', color: '#000' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Ralf</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task3</h6>
-          <p>
-            Change Status to <i style={{color: 'green'}}>finished</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="005"
-          dateText="01.01.19 11:00"
-          style={{ color: '#76bb7f' }}
-          dateInnerStyle={{ background: '#76bb7f' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Arndt</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task8</h6>
-          <p>
-            Change Status to <i style={{color: 'red'}}>in process</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="006"
-          dateText="01.01.19 10:30"
-          style={{ color: '#e86971' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Timo</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task4</h6>
-          <p>
-            Change Status to <i style={{color: 'blue'}}>open</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="007"
-          dateText="01.01.19 11:30"
-          style={{ color: '#61b8ff' }}
-          dateInnerStyle={{ background: '#61b8ff', color: '#000' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Ralf</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task3</h6>
-          <p>
-            Change Status to <i style={{color: 'green'}}>finished</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="008"
-          dateText="01.01.19 11:00"
-          style={{ color: '#76bb7f' }}
-          dateInnerStyle={{ background: '#76bb7f' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Arndt</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task8</h6>
-          <p>
-            Change Status to <i style={{color: 'red'}}>in process</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="009"
-          dateText="01.01.19 10:30"
-          style={{ color: '#e86971' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Timo</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task4</h6>
-          <p>
-            Change Status to <i style={{color: 'blue'}}>open</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="010"
-          dateText="01.01.19 11:00"
-          style={{ color: '#76bb7f' }}
-          dateInnerStyle={{ background: '#76bb7f' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Arndt</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task8</h6>
-          <p>
-            Change Status to <i style={{color: 'red'}}>in process</i>
-          </p>
-        </TimelineItem>
-        <TimelineItem
-          key="011"
-          dateText="01.01.19 10:30"
-          style={{ color: '#e86971' }}
-          bodyContainerStyle={bodyContainerStyle}>
-          <h5>Timo</h5>
-          <h6 style={{ color: '#61b8ff' }}>Task4</h6>
-          <p>
-            Change Status to <i style={{color: 'blue'}}>open</i>
-          </p>
-        </TimelineItem>
-        
+        {
+          this.props.activities.activities.reverse().map( activity => {
+            const  changeDate = new Date(activity.changeDate);
+            if(activity.status === 'open')
+              {  
+                return(
+                  <TimelineItem
+                  key={activity._id}
+                  dateText={changeDate.getFullYear().toString().substr(-2)+'.'+changeDate.getMonth()+1+'.'+changeDate.getDate()+'-'+changeDate.getHours()+':'+changeDate.getMinutes()}
+                  style={{ color: '#61b8ff' }}
+                  dateInnerStyle={{ background: '#61b8ff', color: '#000' }}
+                  bodyContainerStyle={bodyContainerStyle}>
+                  <h5>{activity.userName}</h5>
+                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <p>
+                    Change Status to <i style={{color: 'blue'}}>{activity.status}</i>
+                  </p>
+                </TimelineItem>
+                );
+              } else if(activity.status === 'inProcess') {
+                return(
+                  <TimelineItem
+                  key={activity._id}
+                  dateText={changeDate.getFullYear().toString().substr(-2)+'.'+changeDate.getMonth()+1+'.'+changeDate.getDate()+'-'+changeDate.getHours()+':'+changeDate.getMinutes()}
+                  style={{ color: '#e86971' }}
+                  dateInnerStyle={{ background: '#e86971', color: '#000' }}
+                  bodyContainerStyle={bodyContainerStyle}>
+                  <h5>{activity.userName}</h5>
+                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <p>
+                    Change Status to <i style={{color: 'red'}}>{activity.status}</i>
+                  </p>
+                </TimelineItem>
+                );
+              }
+              else if(activity.status === 'finished') {
+                return(
+                  <TimelineItem
+                  key={activity._id}
+                  dateText={changeDate.getFullYear().toString().substr(-2)+'.'+changeDate.getMonth()+1+'.'+changeDate.getDate()+'-'+changeDate.getHours()+':'+changeDate.getMinutes()}
+                  style={{ color: '#76bb7f' }}
+                  dateInnerStyle={{ background: '#76bb7f', color: '#000' }}
+                  bodyContainerStyle={bodyContainerStyle}>
+                  <h5>{activity.userName}</h5>
+                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <p>
+                    Change Status to <i style={{color: 'green'}}>{activity.status}</i>
+                  </p>
+                </TimelineItem>
+                );
+              }
+              else {
+                return(
+                  <TimelineItem
+                  key={activity._id}
+                  dateText={changeDate.getFullYear().toString().substr(-2)+'.'+changeDate.getMonth()+1+'.'+changeDate.getDate()+'-'+changeDate.getHours()+':'+changeDate.getMinutes()}
+                  style={{ color: '#ffe0b2' }}
+                  dateInnerStyle={{ background: '#ffe0b2', color: '#000' }}
+                  bodyContainerStyle={bodyContainerStyle}>
+                  <h5>{activity.userName}</h5>
+                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <p>
+                    Change Status to <i style={{color: 'orange'}}>{activity.status}</i>
+                  </p>
+                </TimelineItem>
+                );
+              }
+          })
+        }
       </div>
-    )
+    ); else return (<h6>No activities</h6>)
   }
 }
+
+const mapStateToProps = (state) =>{
+  return {
+    activities: state.activities
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getActivity: (date) => dispatch(getActivity(date))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TimeLineItem);

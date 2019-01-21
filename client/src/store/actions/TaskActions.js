@@ -11,17 +11,9 @@ export const resetNotification = () => {
 }
 export const getTasks = () => {
   return (dispatch) => {
-    dispatch({ type: "GET_TASK_START" });
     const request = {
           query: `
             query{
-              tasks(assigned:false){
-                  _id,
-                  title,
-                  description,
-                  date,
-                  deadline
-                },
               userTasks(userTaskInput:{
                                       status:"",
                                       taskId:"",
@@ -39,6 +31,13 @@ export const getTasks = () => {
                   userId {
                     userName
                   }
+                },
+                tasks(assigned:false){
+                  _id,
+                  title,
+                  description,
+                  date,
+                  deadline
                 }
               }
           `
@@ -52,7 +51,7 @@ export const getTasks = () => {
     }).then(data => {
         return data.json();
       }).then(res => {
-       dispatch({ type: "RECEIVE_TASKS", payload: res });
+        return dispatch({ type: "RECEIVE_TASKS", payload: res });
       })
       .catch(err => {
         dispatch({type:'RECEIVE_TASKS_ERROR', payload: err});
@@ -80,13 +79,18 @@ export const updateUserTask = (id, status, date, userId) => {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(data => {
-        return data.json();
-      }).then(() => {
-        dispatch(getTasks());
+    })
+    .then(data => {
+        if(data.status === 200)
+          return dispatch(getTasks());
+        else
+          return false;
       })
+      // .then(() => {
+      //   return dispatch(getTasks());
+      // })
       .catch(err => {
-      dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
+        dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
     });
   };
 };

@@ -21,7 +21,7 @@ export default class Tasks extends Component {
               <div className='card z-depth-0 task-summary' key={task._id} draggable onDragStart={(e) => {this.onDragStart(e, task._id)}}>
                 <div className='card-content grey-text text-darken-3'>
                     <span className='card-title'>
-                    <div className="left">{task.title}</div>
+                    <div className="left"><h6 className='truncate'>{task.title}</h6></div>
                         <img className="btn btn-floating right" alt='MO' src={require('../../unknown.png')}/>
                     </span>
                     <br></br>

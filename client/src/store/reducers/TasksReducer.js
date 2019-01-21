@@ -5,9 +5,9 @@ const initState = {
     waiting: [],
     finished: [],
     loading: true,
-    notification: 0
+    notification: 0,
+    userTasks: []
 };
-
 
 const taskReducer = (state = initState, action) => {
     switch (action.type) {
@@ -22,6 +22,10 @@ const taskReducer = (state = initState, action) => {
                 notification: 0 
             };
         case 'RECEIVE_TASKS':
+            state = {
+                ...state,
+                loading: true
+            }
             const tasks = action.payload.data.tasks;
             const userTasks = action.payload.data.userTasks;
             const open = userTasks.filter(userTask => {
@@ -47,7 +51,8 @@ const taskReducer = (state = initState, action) => {
                 ,inProcess: inProcess
                 ,waiting: waiting
                 ,finished: finished,
-                loading: false
+                loading: false,
+                userTasks: userTasks
             };
         case 'TASK_CREATED':
             const created_task = action.payload.data.createTask;

@@ -7,6 +7,7 @@ export const login = (email, password) => {
                 {
                   userId
                   token
+                  userName
                 }
               }
             `
@@ -33,3 +34,9 @@ export const login = (email, password) => {
         });
     };
 };
+
+export const logout = () => {
+    return (dispatch) => {
+        dispatch({ type: "LOGOUT" });
+    }
+} 
