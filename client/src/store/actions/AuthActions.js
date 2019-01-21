@@ -40,3 +40,37 @@ export const logout = () => {
         dispatch({ type: "LOGOUT" });
     }
 } 
+
+
+export const changePassword = (id, password) => {
+    return (dispatch) => {
+        const request = {
+            query: `
+            mutation {
+                updateUserPassword(
+                    updateUserPassword:
+                        {
+                            id:"${id}",
+                            password:"${password}"
+                        }
+                    )
+              }
+            `
+        };
+        fetch('http://10.10.11.70:3000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if(res.status === 200)
+                dispatch({ type: "CHANGE_PASSWORD" });
+            else {
+                dispatch({ type: "LOGIN_ERROR", payload: res });
+            }
+        }).catch(err => {
+            console.log(err)
+        });
+    };
+};

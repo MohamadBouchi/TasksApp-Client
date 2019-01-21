@@ -16,6 +16,7 @@ import './navBar.css';
 import { connect } from 'react-redux';
 import { resetNotification } from '../../store/actions/TaskActions';
 import { logout } from '../../store/actions/AuthActions';
+import ProfileModal from '../profileModal/ProfileModal';
 
 const styles = theme => ({
   root: {
@@ -67,7 +68,10 @@ class NavBar extends React.Component {
     anchorEl: null,
     mobileMoreAnchorEl: null,
   };
-
+  constructor(props){
+    super(props);
+    this.profileModal = React.createRef();
+  }
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -92,6 +96,12 @@ class NavBar extends React.Component {
   handleLogout = () => {
     this.props.logout();
   }
+  
+  handleProfileOpen = () => {
+    // console.log(this.profileModal.current)
+    this.profileModal.current.handleClickOpen()
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -105,7 +115,7 @@ class NavBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={this.handleProfileOpen}>Profile</MenuItem>
         <MenuItem id='logout'><NavLink onClick={this.handleLogout} to=''>logout</NavLink></MenuItem>
       </Menu>
     );
@@ -135,6 +145,7 @@ class NavBar extends React.Component {
 
     return (
       <div className={classes.root}>
+        <ProfileModal ref={this.profileModal}></ProfileModal>
         <AppBar position="static">
           <Toolbar>
           <IconButton

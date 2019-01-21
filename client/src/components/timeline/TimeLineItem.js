@@ -11,10 +11,11 @@ const bodyContainerStyle = {
             borderRadius: '8px',
             boxShadow: '0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2)'}
 
+const activtyDate = new Date().getFullYear() + ("0" + new Date().getMonth()+1).slice(-2);
 class TimeLineItem extends Component {
   
   componentDidMount(){
-    this.props.getActivity('201901')
+    this.props.getActivity(activtyDate)
   }
   render() {
     if(this.props.activities.activities.length !== 0)

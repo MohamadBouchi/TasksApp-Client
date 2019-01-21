@@ -14,6 +14,7 @@ import { createActivity } from '../../store/actions/ActivityActions';
 import io from 'socket.io-client';
 
 const socket = io.connect("http://10.10.11.70:3000");
+const activtyDate = new Date().getFullYear() + ("0" + new Date().getMonth()+1).slice(-2);
 class Content extends Component {
   onDragOver = (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ class Content extends Component {
     else {
       this.props.updateUserTask(stringData.id, newStatus, new Date().toISOString(), this.props.userId);
     }
-    this.props.createActivity('201901', newStatus, new Date().toISOString(), this.props.auth.userName, stringData.taskTitle);
+    this.props.createActivity(activtyDate, newStatus, new Date().toISOString(), this.props.auth.userName, stringData.taskTitle);
     this.props.setNotification();
     if(!this.props.loading)
     setTimeout(()=>{
@@ -46,6 +47,7 @@ class Content extends Component {
   }
  
   render(){
+    
     if(!this.props.loading){
       const {tasks}  = this.props;
       const {open}  = this.props;
