@@ -7,11 +7,17 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { connect } from 'react-redux';
 import { changePassword } from '../../store/actions/AuthActions';
-
+import Snackbar from '@material-ui/core/Snackbar';
 class FormDialog extends React.Component {
   state = {
     open: false,
-    password: ''
+    password: '',
+    openSnack: false
+  };
+
+
+  handleCloseSnack = () => {
+    this.setState({ openSnack: false });
   };
 
   handleClickOpen = () => {
@@ -25,6 +31,7 @@ class FormDialog extends React.Component {
   changePassword = (e) => {
     e.preventDefault();
     this.props.changePassword(this.props.userId, this.state.password);
+    this.setState({ openSnack: true  });
     this.setState({ open: false });
   }
   render() {
@@ -69,6 +76,16 @@ class FormDialog extends React.Component {
           </DialogActions>
           </form>
         </Dialog>
+
+        <Snackbar
+          anchorOrigin={{vertical: 'top', horizontal: 'right'} }
+          open={this.state.openSnack}
+          onClose={this.handleCloseSnack}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">password has been changed</span>}
+        />
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getActivity } from '../../store/actions/ActivityActions';
 
 const bodyContainerStyle = {
-            background: 'bisque',
+            background: 'silver',
             margin: '0 10px 0 15px',
             padding: '5px',
             borderRadius: '8px',
@@ -34,7 +34,7 @@ class TimeLineItem extends Component {
                   dateInnerStyle={{ background: '#61b8ff', color: '#000' }}
                   bodyContainerStyle={bodyContainerStyle}>
                   <h5>{activity.userName}</h5>
-                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <h6 style={{ color: 'blue' }}>{activity.taskTitle}</h6>
                   <p>
                     Change Status to <i style={{color: 'blue'}}>{activity.status}</i>
                   </p>
@@ -49,7 +49,7 @@ class TimeLineItem extends Component {
                   dateInnerStyle={{ background: '#e86971', color: '#000' }}
                   bodyContainerStyle={bodyContainerStyle}>
                   <h5>{activity.userName}</h5>
-                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <h6 style={{ color: 'blue' }}>{activity.taskTitle}</h6>
                   <p>
                     Change Status to <i style={{color: 'red'}}>{activity.status}</i>
                   </p>
@@ -65,7 +65,7 @@ class TimeLineItem extends Component {
                   dateInnerStyle={{ background: '#76bb7f', color: '#000' }}
                   bodyContainerStyle={bodyContainerStyle}>
                   <h5>{activity.userName}</h5>
-                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <h6 style={{ color: 'blue' }}>{activity.taskTitle}</h6>
                   <p>
                     Change Status to <i style={{color: 'green'}}>{activity.status}</i>
                   </p>
@@ -81,7 +81,7 @@ class TimeLineItem extends Component {
                   dateInnerStyle={{ background: '#ffe0b2', color: '#000' }}
                   bodyContainerStyle={bodyContainerStyle}>
                   <h5>{activity.userName}</h5>
-                  <h6 style={{ color: '#61b8ff' }}>{activity.taskTitle}</h6>
+                  <h6 style={{ color: 'blue' }}>{activity.taskTitle}</h6>
                   <p>
                     Change Status to <i style={{color: 'orange'}}>{activity.status}</i>
                   </p>

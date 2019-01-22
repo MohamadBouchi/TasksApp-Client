@@ -4,7 +4,7 @@
     padding: 10px 5px 0px 5px;
     -webkit-overflow-scrolling: touch;
 }
-#section .row {
+.dashboard__row {
     height: 100%;
 }
 .react-calendar {

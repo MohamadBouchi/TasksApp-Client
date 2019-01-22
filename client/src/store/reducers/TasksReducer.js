@@ -63,7 +63,28 @@ const taskReducer = (state = initState, action) => {
         case 'RECEIVE_TASKS_ERROR':
             console.log('receive_tasks_error');
             break;
-        default: return state;
+
+        case 'FILTER_TASKS':
+            const filterdOpen = state.open.filter(el => {
+                return el.userId.userName.indexOf(action.payload) !== -1
+            });
+            const filterdWaiting = state.waiting.filter(el => {
+                return el.userId.userName.indexOf(action.payload) !== -1
+            });
+            const filterdFinished = state.finished.filter(el => {
+                return el.userId.userName.indexOf(action.payload) !== -1
+            });
+            const filterdInProcess = state.inProcess.filter(el => {
+                return el.userId.userName.indexOf(action.payload) !== -1
+            });
+            return {
+                ...state,
+                open: filterdOpen,
+                waiting: filterdWaiting,
+                inProcess: filterdInProcess,
+                finished: filterdFinished
+            };
+        default: {return state;}
     }
     return state;
 }

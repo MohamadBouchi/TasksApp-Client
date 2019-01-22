@@ -163,3 +163,12 @@ export const createTask = () => {
     });
   };
 };
+
+export const filterTasks = (userName) => {
+  return (dispatch) => {
+    if(userName !== '')
+      dispatch({ type: "FILTER_TASKS", payload: userName });
+    else
+      dispatch(getTasks());
+  }
+}

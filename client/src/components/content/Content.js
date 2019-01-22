@@ -9,13 +9,18 @@ import Calendar from 'react-calendar';
 import PieCharts from '../charts/PieChart';
 import './content.css';
 import { connect } from 'react-redux';
-import { createTask, updateUserTask, getTasks, createUserTask, setNotification } from '../../store/actions/TaskActions';
+import { createTask, updateUserTask, getTasks, createUserTask, setNotification, filterTasks } from '../../store/actions/TaskActions';
 import { createActivity } from '../../store/actions/ActivityActions';
 import io from 'socket.io-client';
 
 const socket = io.connect("http://10.10.11.70:3000");
 const activtyDate = new Date().getFullYear() + ("0" + new Date().getMonth()+1).slice(-2);
 class Content extends Component {
+
+  constructor(props){
+    super(props)
+    this.userNameElRef = React.createRef();
+  }
   onDragOver = (e) => {
     e.preventDefault();
   }
@@ -46,15 +51,21 @@ class Content extends Component {
     });
   }
  
+  handleFilter = () => {
+    this.props.filterTasks(this.userNameElRef.current.value);
+    // this.open = this.props.open.filter(el => {
+    //   return el.userId.userName === this.userNameElRef.current.value
+    // })
+  }
+ 
   render(){
-    
     if(!this.props.loading){
-      const {tasks}  = this.props;
-      const {open}  = this.props;
-      const {inProcess}  = this.props;
-      const {waiting}  = this.props;
-      const {finished}  = this.props;
-      const tasksData= {
+      const {tasks} = this.props;
+      const {open} = this.props;
+      const {inProcess} = this.props;
+      const {waiting} = this.props;
+      const {finished} = this.props;
+      const tasksData = {
         'tasks': tasks.length,
         'open': open.length,
         'inProcess': inProcess.length,
@@ -78,6 +89,11 @@ class Content extends Component {
       return (
         <section id='section'>
           <div className="row">
+            <div className="col s12 m12">
+              <input type="text" onChange={this.handleFilter} placeholder='filter by user name' ref={this.userNameElRef}/>
+            </div>
+          </div>
+          <div className="row dashboard__row">
             <Tasks tasks={tasks}></Tasks>
             <div className="col s12 m2 cyan lighten-4 center-align" 
                   onDragOver={(e) =>this.onDragOver(e)}
@@ -131,6 +147,7 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) => {
   return {
+    filterTasks: (userName) => dispatch(filterTasks(userName)), 
     createTask: () => dispatch(createTask()),
     setNotification: () => dispatch(setNotification()),
     getTasks: () => dispatch(getTasks()),
