@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './cards.css';
+import Link from '@material-ui/core/Link';
 
 class Cards extends Component {
+    handleClick = (e) => {
+        this.props.openDetail(this.props.task._id)
+    }
     onDragStart = (e) => {
         let data = {id: this.props.task._id,
                     userName: this.props.task.userId.userName,
@@ -25,7 +29,9 @@ class Cards extends Component {
                     <hr></hr>
                     <br></br>
                     <p className='left-align'>{description}</p>
-                    <button onClick={this.props.test} value={this.props.task._id} className='center-align'>test</button>
+                    <Link inline='true'
+    value={this.props.task._id}
+      variant="body2" onClick={this.handleClick} style={{cursor: 'pointer'}}>Details</Link>
                     <br></br>
                     <div className="card-action">
                     <p className='grey-text'>{deadline.getFullYear()+'-'+deadline.getMonth()+1+'-'+deadline.getDate()}</p>

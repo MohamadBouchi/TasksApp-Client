@@ -10,7 +10,7 @@ export default class InProcess extends Component {
         <hr/>
         <br/>
         {inProcess && inProcess.map(task => (
-            <Cards test={this.props.test} task={task} key={task._id}/>
+            <Cards openDetail={this.props.openDetail} task={task} key={task._id}/>
           ))}
       </div>
     )

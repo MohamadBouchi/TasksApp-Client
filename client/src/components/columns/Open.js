@@ -10,7 +10,7 @@ export default class Open extends Component {
           <hr/>
           <br/>
           {open && open.map(task => (
-            <Cards task={task} key={task._id}/>
+            <Cards openDetail={this.props.openDetail} task={task} key={task._id}/>
           ))}
         </div>
     )

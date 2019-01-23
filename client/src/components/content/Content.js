@@ -57,8 +57,8 @@ class Content extends Component {
     this.props.filterTasks(this.userNameElRef.current.value);
   }
  
-  test = (e) => {
-    this.taskDetailRef.current.handleClickOpen(e.target.value)
+  openDetail = (e) => {
+    this.taskDetailRef.current.handleClickOpen(e);
   }
   render(){
     if(!this.props.loading){
@@ -101,22 +101,22 @@ class Content extends Component {
             <div className="col s12 m2 cyan lighten-4 center-align" 
                   onDragOver={(e) =>this.onDragOver(e)}
                   onDrop={(e) =>this.onDrop(e, 'open')}>
-                <Open open={open}></Open>
+                <Open openDetail={this.openDetail} open={open}></Open>
             </div>
             <div className="col s12 m2 red lighten-4 center-align" 
                   onDragOver={(e) =>this.onDragOver(e)}
                   onDrop={(e) =>this.onDrop(e, 'inProcess')}>
-                <InProcess test={this.test} inProcess={inProcess}></InProcess>
+                <InProcess openDetail={this.openDetail} inProcess={inProcess}></InProcess>
             </div>
             <div className="col s12 m2 orange lighten-4 center-align" 
                   onDragOver={(e) =>this.onDragOver(e)}
                   onDrop={(e) =>this.onDrop(e, 'waiting')}>
-                <Waiting waiting={waiting}></Waiting>
+                <Waiting openDetail={this.openDetail} waiting={waiting}></Waiting>
             </div>
             <div className="col s12 m2 green accent-1 center-align" 
                   onDragOver={(e) =>this.onDragOver(e)}
                   onDrop={(e) =>this.onDrop(e, 'finished')}>
-                <Finished finished={finished}></Finished>
+                <Finished openDetail={this.openDetail} finished={finished}></Finished>
             </div>
             <div className="col s12 m2 calendar-chart-col">
               <Calendar showNavigation={true} minDetail="year" view='year' maxDetail='year' minDate={new Date()} value={new Date()} maxDate={new Date()}/>

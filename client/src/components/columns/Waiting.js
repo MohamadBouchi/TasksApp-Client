@@ -10,7 +10,7 @@ export default class Waiting extends Component {
           <hr/>
           <br/>
           {waiting && waiting.map(task => (
-            <Cards task={task} key={task._id}/>
+            <Cards openDetail={this.props.openDetail} task={task} key={task._id}/>
           ))}
       </div>
     )
