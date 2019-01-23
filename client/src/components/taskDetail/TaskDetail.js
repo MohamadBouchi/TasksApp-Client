@@ -16,6 +16,8 @@ import classNames from 'classnames';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { withStyles } from '@material-ui/core/styles';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import TextField from '@material-ui/core/TextField';
+import './taskDetail.css';
 
 const sql=`
 select distinct
@@ -168,7 +170,6 @@ class ScrollDialog extends React.Component {
   };
   handleCloseSnackbar = () => {
 
-    console.log('test')
     this.setState({ openSnackbar: false });
   };
   render() {
@@ -192,7 +193,35 @@ class ScrollDialog extends React.Component {
                             <Tab label="Details" />
                             <Tab label="Sql" />
                         </Tabs>
-                        {this.state.value === 0 && <Typography component="div" style={{ padding: 8 * 3 }}>{this.state.status}</Typography>}
+                        {this.state.value === 0 && <Typography component="div" style={{ padding: 8 * 3 }}>
+                        <form  style={{display: 'flex',
+    flexWrap: 'wrap'}}noValidate autoComplete="off">
+                        <TextField
+          id="standard-read-only-input"
+          label="Status"
+          defaultValue={this.state.status}
+          style={{marginLeft:'10px',marginRight:'10px'}}
+          error
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          label="Status"
+          defaultValue={this.state.status}
+          style={{marginLeft:'10px',marginRight:'10px'}}
+          error
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          label="Notice"
+          style={{marginLeft:'10px',marginRight:'10px'}}
+          fullWidth
+        />
+        </form>
+                        </Typography>}
                         {this.state.value === 1 && 
                         <CopyToClipboard text={sql} onCopy={() => this.setState({ openSnackbar: true})}>
                         <Paper>
