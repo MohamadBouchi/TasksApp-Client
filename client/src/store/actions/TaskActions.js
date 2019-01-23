@@ -86,9 +86,6 @@ export const updateUserTask = (id, status, date, userId) => {
         else
           return false;
       })
-      // .then(() => {
-      //   return dispatch(getTasks());
-      // })
       .catch(err => {
         dispatch({type:'UPDATE_TASKS_ERROR', payload: err});
     });
@@ -130,7 +127,6 @@ export const createUserTask = (taskId, userId, status, date) => {
   };
 };
 
-
 export const createTask = () => {
   return (dispatch) => {
     const request = {
@@ -164,10 +160,10 @@ export const createTask = () => {
   };
 };
 
-export const filterTasks = (userName) => {
+export const filterTasks = (filter) => {
   return (dispatch) => {
-    if(userName !== '')
-      dispatch({ type: "FILTER_TASKS", payload: userName });
+    if(filter !== '')
+      dispatch({ type: "FILTER_TASKS", payload: filter });
     else
       dispatch(getTasks());
   }

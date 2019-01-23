@@ -25,6 +25,7 @@ class Cards extends Component {
                     <hr></hr>
                     <br></br>
                     <p className='left-align'>{description}</p>
+                    <button onClick={this.props.test} value={this.props.task._id} className='center-align'>test</button>
                     <br></br>
                     <div className="card-action">
                     <p className='grey-text'>{deadline.getFullYear()+'-'+deadline.getMonth()+1+'-'+deadline.getDate()}</p>

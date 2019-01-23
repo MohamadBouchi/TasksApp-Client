@@ -44,6 +44,7 @@ const taskReducer = (state = initState, action) => {
                 if (userTask.status === 'finished') return userTask;
                 else return null;
             });
+ 
             return {
                 ...state
                 ,tasks: tasks
@@ -66,16 +67,16 @@ const taskReducer = (state = initState, action) => {
 
         case 'FILTER_TASKS':
             const filterdOpen = state.open.filter(el => {
-                return el.userId.userName.indexOf(action.payload) !== -1
+                return el.userId.userName.indexOf(action.payload) !== -1 || el.taskId.title.toLowerCase().indexOf(action.payload) !== -1
             });
             const filterdWaiting = state.waiting.filter(el => {
-                return el.userId.userName.indexOf(action.payload) !== -1
+                return el.userId.userName.indexOf(action.payload) !== -1 || el.taskId.title.toLowerCase().indexOf(action.payload) !== -1
             });
             const filterdFinished = state.finished.filter(el => {
-                return el.userId.userName.indexOf(action.payload) !== -1
+                return el.userId.userName.indexOf(action.payload) !== -1 || el.taskId.title.toLowerCase().indexOf(action.payload) !== -1
             });
             const filterdInProcess = state.inProcess.filter(el => {
-                return el.userId.userName.indexOf(action.payload) !== -1
+                return el.userId.userName.indexOf(action.payload) !== -1 || el.taskId.title.toLowerCase().indexOf(action.payload) !== -1
             });
             return {
                 ...state,
