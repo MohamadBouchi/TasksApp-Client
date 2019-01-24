@@ -18,6 +18,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import TextField from '@material-ui/core/TextField';
 import './taskDetail.css';
+import HorizontalTimeline from 'react-horizontal-timeline';
 
 const sql=`
 select distinct
@@ -113,7 +114,7 @@ const styles1 = theme => ({
     message: PropTypes.node,
     variant: PropTypes.oneOf(['success']).isRequired,
   };
-  
+  const VALUES = [ '2019-01','2019-02','2019-03' ];
   const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 class ScrollDialog extends React.Component {
 
@@ -125,7 +126,10 @@ class ScrollDialog extends React.Component {
     loading: true,
     status: '',
     value: 0,
-    openSnackbar: false
+    valueTimeline: 0, 
+    previous: 0,
+    openSnackbar: false,
+    userName: ''
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -140,6 +144,9 @@ class ScrollDialog extends React.Component {
             status
             taskId{
                 title
+            }
+            userId{
+              userName
             }
           }
         }
@@ -157,7 +164,8 @@ class ScrollDialog extends React.Component {
             this.setState({
                 title: res.data.taskDetail[0].taskId.title,
                 loading: false,
-                status: res.data.taskDetail[0].status
+                status: res.data.taskDetail[0].status,
+                userName: res.data.taskDetail[0].userId.userName,
             })
         })
         .catch(err => {
@@ -175,7 +183,7 @@ class ScrollDialog extends React.Component {
   render() {
     if(!this.state.loading) {
         return (
-            <div>
+            <div className='taskDetail'>
                 <Dialog
                 maxWidth='md'
                 open={this.state.open}
@@ -183,8 +191,8 @@ class ScrollDialog extends React.Component {
                 scroll={this.state.scroll}
                 aria-labelledby="scroll-dialog-title">
                     <DialogTitle id="scroll-dialog-title">{this.state.title}</DialogTitle>
+                    
                     <DialogContent>
-                   
                         <Tabs
                             value={this.state.value}
                             indicatorColor="primary"
@@ -193,8 +201,17 @@ class ScrollDialog extends React.Component {
                             <Tab label="Details" />
                             <Tab label="Sql" />
                         </Tabs>
-                        {this.state.value === 0 && <Typography component="div" style={{ padding: 8 * 3 }}>
-                        <form  style={{display: 'flex',
+                        {this.state.value === 0 && <div style={{ width: '100%', height: '70px', margin: '0 auto' }}>
+                        <HorizontalTimeline
+                        style={{ background: 'white', foreground: 'white', outline: '#dfdfdf' }}
+            index={this.state.valueTimeline}
+            indexClick={(index) => {
+              this.setState({ valueTimeline: index, previous: this.state.valueTimeline });
+            }}
+            values={ VALUES } /></div>}
+            
+                        {this.state.value === 0 && <Typography inline={true} component="div" style={{ padding: 8 * 3 }}>
+                        <div className='text-center'>  <form className='taskDetail__form' style={{display: 'flex',
     flexWrap: 'wrap'}}noValidate autoComplete="off">
                         <TextField
           id="standard-read-only-input"
@@ -207,10 +224,9 @@ class ScrollDialog extends React.Component {
           }}
         />
         <TextField
-          label="Status"
-          defaultValue={this.state.status}
+          label="Changed by"
+          defaultValue={this.state.userName}
           style={{marginLeft:'10px',marginRight:'10px'}}
-          error
           InputProps={{
             readOnly: true,
           }}
@@ -220,12 +236,12 @@ class ScrollDialog extends React.Component {
           style={{marginLeft:'10px',marginRight:'10px'}}
           fullWidth
         />
-        </form>
+        </form></div>
                         </Typography>}
                         {this.state.value === 1 && 
                         <CopyToClipboard text={sql} onCopy={() => this.setState({ openSnackbar: true})}>
                         <Paper>
-                             <Typography component="pre" style={{ padding: 8 * 3 }}>
+                             <Typography inline={true} component="pre" style={{ padding: 8 * 3 }}>
                              {sql}
                             </Typography>
                             <Snackbar
@@ -245,10 +261,7 @@ class ScrollDialog extends React.Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
-                        Cancel
-                        </Button>
-                        <Button onClick={this.handleClose} color="primary">
-                        Subscribe
+                        Close
                         </Button>
                     </DialogActions>
                 </Dialog>

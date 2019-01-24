@@ -26,7 +26,6 @@ export default class Tasks extends Component {
                     </span>
                     <br></br>
                     <hr></hr>
-                    <br></br>
                     <p className='left-align'>{task.description}</p>
                     <br></br>
                     <div className="card-action">

@@ -1,4 +1,8 @@
-input {
+.taskDetail__form input{
     border-bottom: none !important;
     box-shadow: none !important;
+}
+
+li[data-radium="true"] {
+    background-image: none !important;
 }

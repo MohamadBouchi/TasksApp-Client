@@ -2,15 +2,15 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 import React, { Component } from 'react';
 import './pieCharts.css';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF8042'];
 const COLORS01 = ['#F44336', '#00bcd4', '#ff9800', '#4CAF50'];
-
 const RADIAN = Math.PI / 180;
+
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  
+    
   return (
     <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
       {`${(percent * 100).toFixed(0)}%`}
@@ -29,7 +29,8 @@ class PieCharts extends Component {
     const data = [
       { name: 'Timo', value: this.props.usersData.timo.length },
       { name: 'Arndt', value: this.props.usersData.arndt.length },
-      { name: 'Mohamed', value: this.props.usersData.mohamed.length }
+      { name: 'Mohamed', value: this.props.usersData.mohamed.length },
+      { name: 'Lukas', value: this.props.usersData.lukas.length }
     ];
     if(this.props.tasksData.tasks !== 0)
     return (
@@ -58,12 +59,10 @@ class PieCharts extends Component {
             fill="#8884d8"
             paddingAngle={2}
             label
-            labelLine={true}
-          >
+            labelLine={true}>
             {
               data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)
             }
-
           </Pie>
           <Tooltip />
           <Legend

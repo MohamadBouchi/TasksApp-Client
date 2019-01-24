@@ -27,9 +27,8 @@ class Cards extends Component {
                     </span>
                     <br></br>
                     <hr></hr>
-                    <br></br>
                     <p className='left-align'>{description}</p>
-                    <Link inline='true'
+                    <Link inline={true}
     value={this.props.task._id}
       variant="body2" onClick={this.handleClick} style={{cursor: 'pointer'}}>Details</Link>
                     <br></br>

@@ -88,6 +88,11 @@ class Content extends Component {
           return myTask;
         else return null;
       });
+      const lukas = this.props.userTasks.filter(myTask => {
+        if (myTask.userId.userName === 'ljansen')        
+          return myTask;
+        else return null;
+      });
       return (
         <section id='section'>
           <TaskDetail ref={this.taskDetailRef}></TaskDetail>
@@ -121,7 +126,7 @@ class Content extends Component {
             <div className="col s12 m2 calendar-chart-col">
               <Calendar showNavigation={true} minDetail="year" view='year' maxDetail='year' minDate={new Date()} value={new Date()} maxDate={new Date()}/>
               <PieCharts tasksData={tasksData}
-                         usersData={{'mohamed': mohamed, 'arndt': arndt, 'timo': timo}} 
+                         usersData={{'mohamed': mohamed, 'arndt': arndt, 'timo': timo, 'lukas': lukas}} 
               ></PieCharts>
             </div>
           </div>
